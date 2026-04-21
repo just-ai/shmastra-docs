@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist+Mono:wght@300;400;500&display=swap');
+
+:root {
+  --vp-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'avenir next', avenir,
+    'segoe ui', 'helvetica neue', helvetica, arial, sans-serif;
+  --vp-font-family-mono: 'Geist Mono', Menlo, Consolas, Monaco, 'Liberation Mono',
+    'Lucida Console', monospace;
+}
+
+/* ── Dark theme (Mastra-style) ─────────────────────────────────────── */
+.dark {
+  --vp-c-bg: #050505;
+  --vp-c-bg-soft: #171717;
+  --vp-c-bg-mute: #242424;
+  --vp-c-bg-alt: #0d0d0d;
+
+  --vp-c-border: #343434;
+  --vp-c-divider: #2a2a2a;
+  --vp-c-gutter: #1a1a1a;
+
+  --vp-c-text-1: #e6e6e6;
+  --vp-c-text-2: #b0b0b0;
+  --vp-c-text-3: #666666;
+
+  /* green accent — Mastra's signature */
+  --vp-c-brand-1: #46f488;
+  --vp-c-brand-2: #1afb6f;
+  --vp-c-brand-3: #46f488;
+  --vp-c-brand-soft: rgba(70, 244, 136, 0.12);
+
+  /* tip / info / warning / danger callouts */
+  --vp-c-tip-1: #46f488;
+  --vp-c-tip-2: rgba(70, 244, 136, 0.16);
+  --vp-c-tip-3: rgba(70, 244, 136, 0.08);
+  --vp-c-tip-soft: rgba(70, 244, 136, 0.10);
+}
+
+/* ── Light theme (clean, consistent) ──────────────────────────────── */
+:root:not(.dark) {
+  --vp-c-brand-1: #16a34a;
+  --vp-c-brand-2: #15803d;
+  --vp-c-brand-3: #22c55e;
+  --vp-c-brand-soft: rgba(22, 163, 74, 0.10);
+}
+
+/* ── Nav bar ───────────────────────────────────────────────────────── */
+.dark .VPNav {
+  background-color: rgba(5, 5, 5, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: #2a2a2a;
+}
+
+/* ── Sidebar ───────────────────────────────────────────────────────── */
+.dark .VPSidebar {
+  background-color: #050505;
+  border-right-color: #2a2a2a;
+}
+
+.dark .VPSidebarItem.is-active > .item > .link > .text {
+  color: #46f488;
+}
+
+/* ── Content area ──────────────────────────────────────────────────── */
+.dark .VPContent {
+  background-color: #050505;
+}
+
+.dark .VPDoc .container {
+  max-width: 900px;
+}
+
+/* ── Headings ──────────────────────────────────────────────────────── */
+.dark h1 {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.dark h2, .dark h3, .dark h4 {
+  color: #f0f0f0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* heading anchor divider */
+.dark h2 {
+  border-top-color: #2a2a2a;
+}
+
+/* ── Code blocks ───────────────────────────────────────────────────── */
+.dark div[class*='language-'] {
+  background-color: #111111;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+}
+
+.dark :not(pre) > code {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #46f488;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.875em;
+}
+
+/* ── Custom containers (tip, warning, etc.) ────────────────────────── */
+.dark .custom-block.tip {
+  background-color: rgba(70, 244, 136, 0.06);
+  border-color: rgba(70, 244, 136, 0.3);
+}
+
+.dark .custom-block.warning {
+  background-color: rgba(234, 179, 8, 0.06);
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+.dark .custom-block.danger {
+  background-color: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* ── Tables ────────────────────────────────────────────────────────── */
+.dark .vp-doc table {
+  border-collapse: collapse;
+}
+
+.dark .vp-doc th {
+  background-color: #171717;
+  color: #e6e6e6;
+  border-color: #343434;
+}
+
+.dark .vp-doc td {
+  border-color: #2a2a2a;
+}
+
+.dark .vp-doc tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ── Links ─────────────────────────────────────────────────────────── */
+.dark .vp-doc a {
+  color: #46f488;
+  text-decoration: none;
+}
+
+.dark .vp-doc a:hover {
+  text-decoration: underline;
+}
+
+/* ── Aside / on-page nav ───────────────────────────────────────────── */
+.dark .VPDocAsideOutline .outline-link.active {
+  color: #46f488;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────── */
+.dark .VPFooter {
+  background-color: #050505;
+  border-top-color: #2a2a2a;
+}
+
+/* ── Home page hero ────────────────────────────────────────────────── */
+.dark .VPHero .name {
+  background: linear-gradient(135deg, #ffffff 40%, #46f488 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Search ────────────────────────────────────────────────────────── */
+.dark .VPLocalSearchBox {
+  background-color: #111111;
+  border-color: #343434;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────── */
+.dark .VPButton.brand {
+  background-color: #46f488;
+  color: #050505;
+  border-color: #46f488;
+  font-weight: 600;
+}
+
+.dark .VPButton.brand:hover {
+  background-color: #1afb6f;
+  border-color: #1afb6f;
+}
+
+/* ── Scrollbar (subtle) ────────────────────────────────────────────── */
+.dark ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #343434;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
