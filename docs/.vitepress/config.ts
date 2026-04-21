@@ -7,9 +7,12 @@ export default defineConfig({
   base: '/shmastra-docs/',
   cleanUrls: true,
   lastUpdated: true,
+  appearance: 'dark',
 
   head: [
-    ['meta', { name: 'theme-color', content: '#3c82f6' }],
+    ['meta', { name: 'theme-color', content: '#46f488' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
   ],
 
   themeConfig: {
