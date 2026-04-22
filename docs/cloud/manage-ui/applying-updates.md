@@ -15,35 +15,34 @@ worktree.
 
 Web-UI updates run in parallel with a concurrency cap of 5.
 
-## The 9 phases
+## The 8 phases
 
 Every update runs through these phases in order. The UI shows a
 phase progress bar per sandbox and streams logs over SSE.
 
 1. **connect** — open an E2B connection to the sandbox.
-2. **setup** — configure git identity (so any commits the healer
-   made have a sane author).
-3. **fetch** — commit local changes inside the sandbox (so we don't
-   lose work), fetch `origin`, check whether we're behind `main`.
-4. **merge** — create a git worktree on `origin/main`, merge any
+2. **fetch** — configure git identity, commit any local sandbox
+   changes (so no work is lost), fetch `origin`, and check whether
+   we're behind `main`.
+3. **merge** — create a git worktree on `origin/main`, merge any
    local commits into it. The dev server keeps running in the main
    working tree throughout this phase.
-5. **install** — `pnpm install` inside the worktree.
-6. **build** — `pnpm dry-run` to verify the build compiles. If it
+4. **install** — `pnpm install` inside the worktree.
+5. **build** — `pnpm dry-run` to verify the build compiles. If it
    fails, the pipeline bails out without touching the main tree.
-7. **apply** — stop `shmastra` and `healer` processes, fast-forward
+6. **apply** — stop `shmastra` and `healer` processes, fast-forward
    the main branch to `origin/main`, re-run `pnpm install` in the
    main directory.
-8. **patch** — run any pending scripts from `scripts/patches/` (see
+7. **patch** — run any pending scripts from `scripts/patches/` (see
    [Patches](/cloud/day-2/patches)). Each sandbox tracks its
    `version` in Supabase; only newer patches are applied.
-9. **restart** — restart pm2 processes (`shmastra`, `healer`). The
+8. **restart** — restart pm2 processes (`shmastra`, `healer`). The
    UI waits for a healthy response on port 4111 before calling the
    update complete.
 
 If any phase fails, the pipeline stops and reports. The worktree is
-thrown away; the main tree is untouched until phase 7. Only phases
-7–9 mutate production state.
+thrown away; the main tree is untouched until phase 6. Only phases
+6–8 mutate production state.
 
 ## Conflict resolution
 

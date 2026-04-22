@@ -14,7 +14,7 @@ themselves.
 
 ## How crashes are detected
 
-Three independent signals:
+Four independent signals:
 
 1. **pm2 process exit.** The healer subscribes to the pm2 bus and
    listens for `exit` events from the `shmastra` process. `shmastra`
@@ -29,6 +29,14 @@ Three independent signals:
    last line is `Bundling…` and the file hasn't been modified in
    20 s, it restarts the dev server (a lightweight action — this
    alone doesn't trigger a full heal).
+4. **Resource pressure.** Every 15 seconds the healer reads memory
+   usage from the cgroup filesystem and the 1-minute CPU load average.
+   If either stays above the threshold (> 90 % of the cgroup memory
+   limit, or > 2.5 load per CPU core) for four consecutive checks
+   (≈ 1 minute of sustained pressure), it triggers an *emergency
+   resource heal*: orphan Node processes are killed and the dev server
+   is restarted. This handles situations where the process is alive
+   but OOM-thrashing rather than serving requests.
 
 ## How the heal works
 

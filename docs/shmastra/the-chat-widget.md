@@ -69,6 +69,24 @@ The agent is primed by skill files under
 - **Use safe inputs for secrets.** Anything resembling a key or token
   goes through `ask_env_vars_safely`.
 
+## Context the agent receives automatically
+
+With every message, the widget sends two pieces of context that the
+coding agent can use without you having to mention them:
+
+- **Current page path** — the Studio URL you have open (e.g.
+  `/agents/supportAgent`). This is how *Inspect & fix* knows which
+  agent you mean when you say "this agent keeps answering in Russian"
+  with no other context.
+- **User timezone** — your browser's IANA timezone (e.g.
+  `America/New_York`, `Europe/Paris`). The agent uses it when writing
+  scheduled workflows, cron expressions, or any date/time logic, so
+  the times are correct for your location without you having to
+  specify a timezone explicitly.
+
+Neither value is stored; both are read fresh from the browser on each
+request.
+
 ## What you can ask for
 
 Anything on the [Features](/shmastra/features/) index page. Each feature
