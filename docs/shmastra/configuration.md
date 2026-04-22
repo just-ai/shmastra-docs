@@ -17,6 +17,28 @@ GOOGLE_GENERATIVE_AI_API_KEY=AI...
 Any one of these is enough to get started; more keys give Shmastra more
 fallback options when a provider is down.
 
+## Model selection and fallback
+
+Shmastra organises models into three tiers used for different tasks:
+
+| Tier | Used for |
+|---|---|
+| **fast** | Quick lookups and lightweight rewrites. |
+| **general** | Most agent responses (default). |
+| **best** | Complex reasoning: architecture decisions, conflict resolution. |
+
+Each tier holds a priority-ordered list of models across providers.
+When a request runs, Shmastra picks every model in that tier whose
+provider key is set and configures them as ordered fallbacks — each
+with one automatic retry. If the top-priority model returns an error,
+the next available model is tried transparently, without any
+configuration change on your part.
+
+**Practical result:** if you have both an OpenAI key and an Anthropic
+key you get automatic provider-level redundancy for free. If one
+provider is down or rate-limits you, calls fall through to the next
+one silently.
+
 ## Optional
 
 | Variable | Purpose |
