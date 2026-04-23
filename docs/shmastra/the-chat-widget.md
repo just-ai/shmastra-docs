@@ -53,8 +53,18 @@ before the next attempt.
 
 ## Rules the agent follows
 
-The agent is primed by skill files under
-`src/mastra/public/.mastracode/skills/`. The ground rules are:
+The agent is primed by skill files from two locations:
+
+- **Project skills** — `src/mastra/public/.mastracode/skills/` in the
+  current project. These are the primary source of domain knowledge
+  and custom behaviors for this project.
+- **Global skills** — `~/.mastracode/skills/` in your home directory.
+  Files placed here are loaded alongside the project skills and are
+  available in every Shmastra project on the machine, without copying.
+  Useful for personal coding conventions or shared team patterns you
+  always want the agent to follow.
+
+The ground rules baked into those skills are:
 
 - **The user is not a developer.** The agent never asks you to edit
   files or run commands; it does that for itself.
