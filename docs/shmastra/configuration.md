@@ -76,8 +76,11 @@ suggests the correct prefixed names — you usually don't need to guess.
 | `.storage/code.db` | The mastracode harness database. |
 | `files/` | Uploaded files. Accessible via generated public URLs on localhost. |
 | `.mastra/output/` | Build output (do not edit). |
+| `src/mastra/public/.mastracode/skills/` | Coding agent skill files (project-level). Shmastra reads these to prime the coding agent with project-specific knowledge and custom behaviors. |
+| `~/.mastracode/skills/` | Global coding agent skill files, shared across all projects on this machine. Loaded alongside the project-level skills — useful for skills you want available in every project without copying them. |
 
-All paths are relative to the project root.
+All paths are relative to the project root, except `~/.mastracode/skills/`
+which is in your home directory.
 
 ## Package manager
 
