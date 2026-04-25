@@ -115,3 +115,69 @@ happens behind the scenes.
 - **Use Inspect & fix** for bug reports — navigate to the broken
   agent's page in Studio, then complain in the widget. The agent sees
   which agent you're looking at and debugs that one.
+
+## Embedding the widget in your own page
+
+The widget ships as a self-contained IIFE bundle
+(`assistant-widget.iife.js`) built from the
+[shmastra-widget](https://github.com/just-ai/shmastra-widget) repo.
+You can embed it in any HTML page to get the same chat panel — useful
+when you want to add the Shmastra coding interface to a custom
+dashboard or any page outside Mastra Studio.
+
+### Programmatic init
+
+```html
+<script src="assistant-widget.iife.js"></script>
+<script>
+  AssistantWidget.initAssistantWidget({
+    apiBaseUrl: 'http://localhost:4111',
+    theme: 'dark',             // 'light' | 'dark' | 'system'
+    element: '#my-container',  // CSS selector or HTMLElement (optional)
+    width: '30rem',            // CSS value (optional)
+    height: '80vh',            // CSS value (optional)
+  });
+</script>
+```
+
+Returns `{ unmount: () => void }` so you can tear the widget down
+programmatically.
+
+### Auto-init
+
+If the page contains a `<div id="assistant-widget">`, the widget
+mounts there automatically as soon as the script loads. Pass options
+via `data-*` attributes:
+
+```html
+<div id="assistant-widget"
+     data-api-base-url="http://localhost:4111"
+     data-theme="light">
+</div>
+<script src="assistant-widget.iife.js"></script>
+```
+
+### Options
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `element` | `HTMLElement \| string` | new `<div>` appended to `<body>` | Mount container. Accepts a CSS selector string or an `HTMLElement`. |
+| `apiBaseUrl` | `string` | `""` | Base URL of the Shmastra server (e.g. `http://localhost:4111`). |
+| `theme` | `'light' \| 'dark' \| 'system'` | `'system'` | Color theme. `'system'` tracks `prefers-color-scheme` and updates live. |
+| `width` | `string` | `25rem` | Panel width — any CSS length value. |
+| `height` | `string` | `calc(100vh - 6rem)` | Panel height — any CSS length value. |
+
+### CSS customization
+
+The panel drop-shadow is controlled by a CSS variable on the host
+page (outside the Shadow DOM):
+
+```css
+body {
+  --widget-shadow: -8px 0 40px rgba(0, 0, 0, 0.5);
+}
+```
+
+The widget renders inside a **Shadow DOM**, so host-page styles never
+bleed into the widget, and widget styles never bleed into the host
+page.
