@@ -161,7 +161,14 @@
 
 /* ── Home page hero ────────────────────────────────────────────────── */
 .dark .VPHero .name {
-  background: linear-gradient(135deg, #ffffff 40%, #46f488 100%);
+  background: linear-gradient(135deg, #46f488 0%, #ffffff 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:root:not(.dark) .VPHero .name {
+  background: linear-gradient(135deg, #0aad4a 0%, #111111 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

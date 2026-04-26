@@ -4,22 +4,20 @@ layout: home
 hero:
   name: Shmastra
   text: Vibe-code AI agents and workflows
-  tagline: From your terminal — or from a browser your whole team can share.
+  tagline: With 200+ connections, any MCP servers, messaging channels and standalone web apps
 features:
   - title: Shmastra — for developers
     details: >-
       A Mastra template. Bootstrap with one command, open Mastra Studio, and
       describe what you want in the built-in chat widget. Shmastra writes the
-      code, rebuilds, hot-reloads, and self-heals. Works with 200+ Composio
-      services, any MCP server, messaging channels (Telegram, Slack,
-      Discord…), and generates standalone web apps for your agents.
+      code, rebuilds, hot-reloads, and self-heals.
     linkText: Start building
     link: /shmastra/
   - title: Shmastra Cloud — for your team
     details: >-
-      Deploy once on Vercel; every colleague signs in through WorkOS and gets
-      a private E2B sandbox with Mastra Studio and Shmastra already running.
-      No local Node, no CLI. Admins roll out updates and watch sandboxes
+      Deploy once on Vercel. Every colleague signs in through WorkOS and gets
+      a private sandbox with Shmastra already running.
+      No local Node, no CLI. Admins can roll out updates and watch sandboxes
       through the Manage UI.
     linkText: Deploy Cloud
     link: /cloud/

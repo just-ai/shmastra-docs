@@ -1,0 +1,23 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
+            <circle cx="4" cy="4" r="2" fill="#2a2a2a"/>
+        </pattern>
+    </defs>
+
+    <!-- Фон -->
+    <rect width="512" height="512" rx="64" fill="black"/>
+    <rect width="512" height="512" rx="64" fill="url(#dots)"/>
+
+    <!-- Крупные буквы -->
+    <text x="50%" y="54%"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          font-family="Inter, Arial, sans-serif"
+          font-size="300"
+          font-weight="700"
+          letter-spacing="-8"
+          fill="#7ED9A3">
+        Sh
+    </text>
+</svg>
