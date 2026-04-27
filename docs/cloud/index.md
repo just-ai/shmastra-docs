@@ -18,6 +18,9 @@ After you deploy Cloud once, every colleague who signs in gets:
 - **No local setup.** Just a browser.
 - **No API keys to manage.** Cloud hands each sandbox a virtual key;
   the real provider keys stay on your Vercel environment.
+- **[Scheduled tasks](/cloud/scheduling)** — any agent task or
+  workflow can run automatically on a cron, with results and traces
+  stored per run.
 
 ## What you get as the admin
 

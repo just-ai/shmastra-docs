@@ -36,6 +36,17 @@ From Mastra Studio's workflow page you can trigger a run manually with
 the input form the widget generated. You can also call it from another
 agent, another workflow, or over the REST API.
 
+## Running on a schedule
+
+Workflows (and agent tasks in general) can run automatically on a cron
+— daily, weekly, or any interval you choose. Just tell the widget when
+and how often:
+
+> *Run this workflow every Monday at 9 am.*
+
+See [Workflow scheduling](/cloud/scheduling) for details
+(Shmastra Cloud only).
+
 ## Iterate
 
 - *"Add a step that also posts the result to our #reports channel on
