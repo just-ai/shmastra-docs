@@ -57,6 +57,26 @@ Talk to your assistant:
 | *"Delete the invoice-processor schedule."* | Assistant removes it. |
 | *"Show me the last 5 runs of the digest."* | Assistant fetches and summarises run history. |
 
+## Under the hood
+
+Schedules in Shmastra Cloud are always backed by a **Mastra workflow**.
+If you describe a task that doesn’t already have one, the assistant
+creates a lightweight workflow automatically — typically a single step
+wrapping an agent call via `createAgentStep`.
+
+The schedule itself is stored in Supabase and fired by a pg_cron job.
+On each fire, Cloud:
+
+1. Wakes the sandbox (if sleeping).
+2. Calls the Mastra workflow via `@mastra/client-js`, passing your
+   `input_data` as the run payload.
+3. Polls the run status and records the result, including a direct
+   link to the observability trace for that run.
+
+The `shmastra-cloud` MCP server exposes five tools the assistant can
+call: `create_workflow_schedule`, `list_schedules`, `update_schedule`,
+`delete_schedule`, and `list_runs`.
+
 ## Caveats
 
 - **The sandbox must be running** for a schedule to fire. Cloud
@@ -65,3 +85,7 @@ Talk to your assistant:
   or working hours when you want a local time (e.g., *"9 am my time"*
   or *"during Moscow business hours"*). The assistant already has your
   browser timezone in context, so a simple *"9 am my time"* is enough.
+- **`input_data` is validated** against the workflow’s input schema
+  when a schedule is created or updated. If the workflow input changes
+  after a schedule exists, the assistant will flag it and ask you to
+  confirm the updated values.
