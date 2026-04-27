@@ -100,6 +100,7 @@ export default defineConfig({
           items: [
             { text: 'Local development', link: '/cloud/local-development' },
             { text: 'Onboarding your team', link: '/cloud/onboarding-your-team' },
+            { text: 'Workflow scheduling', link: '/cloud/scheduling' },
           ],
         },
         {

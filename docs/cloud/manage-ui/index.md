@@ -46,6 +46,10 @@ ANTHROPIC_API_KEY=...
   `healer`.
 - [Files](/cloud/manage-ui/files) — full file manager.
 - [Terminal](/cloud/manage-ui/terminal) — arbitrary shell commands.
+- **Stats** — live CPU, memory, and disk sparklines for the sandbox
+  process, updated every few seconds.
+- **Trace** — observability view showing recent agent traces streamed
+  from inside the sandbox.
 
 ## CLI alternatives
 

@@ -15,7 +15,7 @@ worktree.
 
 Web-UI updates run in parallel with a concurrency cap of 5.
 
-## The 8 phases
+## The 9 phases
 
 Every update runs through these phases in order. The UI shows a
 phase progress bar per sandbox and streams logs over SSE.
@@ -30,19 +30,23 @@ phase progress bar per sandbox and streams logs over SSE.
 4. **install** — `pnpm install` inside the worktree.
 5. **build** — `pnpm dry-run` to verify the build compiles. If it
    fails, the pipeline bails out without touching the main tree.
-6. **apply** — stop `shmastra` and `healer` processes, fast-forward
-   the main branch to `origin/main`, re-run `pnpm install` in the
-   main directory.
-7. **patch** — run any pending scripts from `scripts/patches/` (see
+6. **migrate** — snapshot the observability database (DuckDB) and run
+   any required schema migrations against the worktree copy. If
+   migration fails, the original snapshot is restored and the update
+   aborts — the sandbox stays on its current schema and code.
+7. **apply** — fast-forward the main branch to `origin/main` and
+   run `pnpm install` in the main directory.
+8. **patch** — run any pending scripts from `scripts/patches/` (see
    [Patches](/cloud/day-2/patches)). Each sandbox tracks its
    `version` in Supabase; only newer patches are applied.
-8. **restart** — restart pm2 processes (`shmastra`, `healer`). The
-   UI waits for a healthy response on port 4111 before calling the
-   update complete.
+9. **restart** — stop pm2, swap migrated databases into place (if a
+   migration ran in phase 6), and restart pm2 processes (`shmastra`,
+   `healer`). The UI waits for a healthy response on port 4111 before
+   calling the update complete.
 
 If any phase fails, the pipeline stops and reports. The worktree is
-thrown away; the main tree is untouched until phase 6. Only phases
-6–8 mutate production state.
+thrown away; the main tree is untouched until phase 7. Only phases
+7–9 mutate production state.
 
 ## Conflict resolution
 
