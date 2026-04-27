@@ -21,6 +21,7 @@ and a short note on what it generates behind the scenes.
 ## Ship it
 
 - [Web apps](/shmastra/features/web-apps) — generate a frontend for your agent or workflow
+- [Workflow scheduling](/cloud/scheduling) — run any task on a cron, results stored with traces (Shmastra Cloud only)
 
 ## Connect to the outside world
 

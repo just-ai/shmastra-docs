@@ -4,7 +4,7 @@
 their company so teammates can vibe-code AI agents from a browser
 without touching Node, npm, or a terminal.
 
-If that's not you — if you just want to build agents on your own
+If that’s not you — if you just want to build agents on your own
 machine — head to [Shmastra for developers](/shmastra/) instead.
 
 ## What your teammates get
@@ -18,6 +18,9 @@ After you deploy Cloud once, every colleague who signs in gets:
 - **No local setup.** Just a browser.
 - **No API keys to manage.** Cloud hands each sandbox a virtual key;
   the real provider keys stay on your Vercel environment.
+- **[Scheduled tasks](/cloud/scheduling)** — any agent task or
+  workflow can run automatically on a cron, with results and traces
+  stored per run.
 
 ## What you get as the admin
 
@@ -36,9 +39,9 @@ Work top-to-bottom:
 
 1. [What is Shmastra Cloud](/cloud/what-is-shmastra-cloud) — the
    one-page concept.
-2. [Architecture](/cloud/architecture) — the moving parts you'll
+2. [Architecture](/cloud/architecture) — the moving parts you’ll
    provision.
-3. [Prerequisites](/cloud/prerequisites) — accounts you'll need.
+3. [Prerequisites](/cloud/prerequisites) — accounts you’ll need.
 4. [Setup](/cloud/setup/) — step-by-step: Supabase → WorkOS → E2B →
    env vars → deploy to Vercel.
 5. [Onboarding your team](/cloud/onboarding-your-team) — invite users
