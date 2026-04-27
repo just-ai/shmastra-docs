@@ -34,7 +34,8 @@ The assistant will:
 3. Confirm the cron expression and next fire time.
 
 You don't need to know anything about workflows or cron syntax —
-just describe the goal.
+just describe the goal. The widget knows your local timezone from the
+browser, so saying *"9 am"* or *"during working hours"* is enough.
 
 ## Viewing schedules and run history
 
@@ -81,10 +82,6 @@ call: `create_workflow_schedule`, `list_schedules`, `update_schedule`,
 
 - **The sandbox must be running** for a schedule to fire. Cloud
   automatically wakes a sleeping sandbox before each run.
-- **Cron times are in UTC by default.** Always mention your timezone
-  or working hours when you want a local time (e.g., *"9 am my time"*
-  or *"during Moscow business hours"*). The assistant already has your
-  browser timezone in context, so a simple *"9 am my time"* is enough.
 - **`input_data` is validated** against the workflow’s input schema
   when a schedule is created or updated. If the workflow input changes
   after a schedule exists, the assistant will flag it and ask you to
