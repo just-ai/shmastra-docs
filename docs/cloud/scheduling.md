@@ -2,90 +2,73 @@
 
 Shmastra Cloud can run any recurring task on a schedule — daily at a
 fixed time, every few hours, or on any cron expression you choose.
-Just describe what you want; the assistant builds and wires up
-everything for you.
-
-## How it works
-
-Shmastra Cloud injects a `shmastra-cloud` MCP server into every sandbox
-automatically. The assistant uses that server's tools to create and
-manage schedules on your behalf. At fire time, Cloud wakes the sandbox
-if needed, runs the task, and records the outcome — including the full
-observability trace.
+Just describe what you want and when; the assistant takes care of
+the rest.
 
 ## Creating a schedule
 
-Just ask the widget what you want and when:
+Tell the widget what the task is and when it should run:
 
-> *Send me a daily Telegram summary of open GitHub issues at 9 am on
-> weekdays.*
+> *Send me a Telegram summary of open GitHub issues every weekday at
+> 9 am.*
 
-> *Run the **invoice-processor** workflow at midnight on the first of
-> every month with `{ "team": "billing" }` as input.*
-
-> *Every Monday morning, have the research agent pull last week's
+> *Every Monday morning have the research agent pull last week’s
 > analytics and post a digest to our Slack channel.*
 
-The assistant will:
+> *Run the **invoice-processor** on the first of every month with
+> `{ "team": "billing" }` as input.*
 
-1. Ask any clarifying questions (which agent, what data, which
-   channel, etc.) if you haven't specified.
-2. Create or adapt the necessary workflow and wire up the schedule.
-3. Confirm the cron expression and next fire time.
-
-You don't need to know anything about workflows or cron syntax —
-just describe the goal.
+The assistant will clarify anything it needs (which agent, which
+channel, what data), then create the schedule and confirm the next
+fire time. You don’t need to know cron syntax or anything about
+workflows. The widget already knows your local timezone from the
+browser, so *“9 am”* or *“during working hours”* is enough.
 
 ## Viewing schedules and run history
 
-A **Tasks** button appears in the Mastra Studio sidebar inside your
-sandbox. Click it to open the schedules panel. For each schedule you
-can see:
+A **Tasks** button appears in the Mastra Studio sidebar. Click it to
+open the schedules panel where you can see:
 
 - The task name, cron expression, and next fire time.
 - A list of past runs with status, timestamp, and a link to the
-  observability trace.
+  full observability trace.
 
 ## Managing schedules
 
-Talk to your assistant:
+Just talk to the assistant:
 
 | What to say | What happens |
 |---|---|
-| *"Pause the weekly-report schedule."* | Assistant disables it. |
-| *"Change the digest to run at 6 am instead."* | Assistant updates the cron. |
-| *"Delete the invoice-processor schedule."* | Assistant removes it. |
-| *"Show me the last 5 runs of the digest."* | Assistant fetches and summarises run history. |
+| *“Pause the weekly digest.”* | Assistant disables the schedule. |
+| *“Change the digest to 6 am.”* | Assistant updates the cron. |
+| *“Delete the invoice-processor schedule.”* | Assistant removes it. |
+| *“Show me the last 5 runs.”* | Assistant fetches and summarises run history. |
 
 ## Under the hood
 
-Schedules in Shmastra Cloud are always backed by a **Mastra workflow**.
-If you describe a task that doesn’t already have one, the assistant
-creates a lightweight workflow automatically — typically a single step
-wrapping an agent call via `createAgentStep`.
+Schedules are always backed by a **Mastra workflow**. If the task you
+describe doesn’t already have one, the assistant creates a lightweight
+workflow automatically — typically a single step wrapping your agent
+call.
 
-The schedule itself is stored in Supabase and fired by a pg_cron job.
-On each fire, Cloud:
+The schedule is stored in Supabase and fired by a pg_cron job.
+On each fire, Shmastra Cloud:
 
-1. Wakes the sandbox (if sleeping).
-2. Calls the Mastra workflow via `@mastra/client-js`, passing your
-   `input_data` as the run payload.
-3. Polls the run status and records the result, including a direct
-   link to the observability trace for that run.
+1. Wakes the sandbox if it’s sleeping.
+2. Calls the workflow via `@mastra/client-js`, passing your input data
+   as the run payload.
+3. Polls the run status and stores the result with a link to the
+   observability trace.
 
-The `shmastra-cloud` MCP server exposes five tools the assistant can
-call: `create_workflow_schedule`, `list_schedules`, `update_schedule`,
+The `shmastra-cloud` MCP server — injected automatically into every
+sandbox — exposes the tools the assistant uses:
+`create_workflow_schedule`, `list_schedules`, `update_schedule`,
 `delete_schedule`, and `list_runs`.
 
 ## Caveats
 
-- **The sandbox must be running** for a schedule to fire. Cloud
-  automatically wakes a sleeping sandbox before each run.
-- **Cron times are in UTC by default.** Always mention your timezone
-  or working hours when you want a local time (e.g., *"9 am my time"*
-  or *"during Moscow business hours"*). The assistant already has your
-  browser timezone in context, so a simple *"9 am my time"* is enough.
-- **`input_data` is validated** against the workflow’s input schema
-  when a schedule is created or updated. If the workflow input changes
-  after a schedule exists, the assistant will flag it and ask you to
-  confirm the updated values.
+- **The sandbox must be running** for a schedule to fire. Cloud wakes
+  a sleeping sandbox automatically before each run.
+- **Input data is validated** against the workflow’s input schema when
+  a schedule is created or updated. If the workflow’s inputs change
+  later, the assistant will flag it at the next update.
