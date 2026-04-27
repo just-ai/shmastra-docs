@@ -114,6 +114,7 @@ export default defineConfig({
             { text: 'Logs', link: '/cloud/manage-ui/logs' },
             { text: 'Files', link: '/cloud/manage-ui/files' },
             { text: 'Terminal', link: '/cloud/manage-ui/terminal' },
+            { text: 'Env profiles', link: '/cloud/manage-ui/env-profiles' },
           ],
         },
         {

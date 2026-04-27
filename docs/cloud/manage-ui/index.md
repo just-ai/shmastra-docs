@@ -34,8 +34,16 @@ E2B_API_KEY=...
 ANTHROPIC_API_KEY=...
 ```
 
+By default the Manage UI loads `.env.local` and `.env` (the **local**
+profile). To manage multiple environments without editing `.env.local`,
+create named profiles and switch via the header dropdown. See
+[Environment profiles](/cloud/manage-ui/env-profiles).
+
 ## What's inside
 
+- [Environment profiles](/cloud/manage-ui/env-profiles) — switch
+  between named env profiles (local, prod, staging…) from the header
+  bar.
 - [Sandbox table](/cloud/manage-ui/sandbox-table) — every sandbox
   with status and quick actions.
 - [Applying updates](/cloud/manage-ui/applying-updates) — the 9-phase

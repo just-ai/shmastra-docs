@@ -53,7 +53,9 @@ If `build:studio` fails, Mastra Studio won't render — check that the
 
 - **Use the same `.env.local` for everything.** `npm run template:build`,
   `manage/index.mts`, and `npm run dev` all read it. One file, one
-  set of secrets.
+  set of secrets. If you manage multiple environments, see
+  [Environment profiles](/cloud/manage-ui/env-profiles) to keep them
+  separate without editing this file.
 - **Hot-reload does not cross runtimes.** If you edit
   `/api/gateway/[...path]/route.ts` (Edge), Next.js restarts the edge
   function — no weird action needed. If you edit
