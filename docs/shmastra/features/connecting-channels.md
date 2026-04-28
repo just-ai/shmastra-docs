@@ -4,18 +4,40 @@ Any Shmastra agent can be hooked up to a messaging platform. Incoming
 messages run through the agent's normal pipeline (memory, tools,
 instructions) and replies stream back into the platform.
 
-Available channels today:
+The full list of available adapters is at [chat-sdk.dev/adapters](https://chat-sdk.dev/adapters).
 
-- [Telegram](/shmastra/features/channel-telegram) — `@chat-adapter/telegram`
-- [Slack](/shmastra/features/channel-slack) — `@chat-adapter/slack`
-- [Discord](/shmastra/features/channel-discord) — `@chat-adapter/discord`
-- [WhatsApp](/shmastra/features/channel-whatsapp) — `@chat-adapter/whatsapp`
-- [Microsoft Teams](/shmastra/features/channel-teams) — `@chat-adapter/teams`
-- [Email (Resend)](/shmastra/features/channel-email) — `@resend/chat-sdk-adapter`
+## Official adapters
 
-Additional adapters bundled out of the box: Google Chat, iMessage,
-Matrix, Webex, Linear, GitHub, Liveblocks, Sendblue, Zernio, Baileys.
-Ask the widget for any of them the same way.
+Maintained by the chat-sdk team.
+
+| Channel | Package |
+|---|---|
+| [Discord](/shmastra/features/channel-discord) | `@chat-adapter/discord` |
+| [GitHub](/shmastra/features/channel-github) | `@chat-adapter/github` |
+| [Google Chat](/shmastra/features/channel-google-chat) | `@chat-adapter/gchat` |
+| [Linear](/shmastra/features/channel-linear) | `@chat-adapter/linear` |
+| [Microsoft Teams](/shmastra/features/channel-teams) | `@chat-adapter/teams` |
+| [Slack](/shmastra/features/channel-slack) | `@chat-adapter/slack` |
+| [Telegram](/shmastra/features/channel-telegram) | `@chat-adapter/telegram` |
+| [WhatsApp](/shmastra/features/channel-whatsapp) | `@chat-adapter/whatsapp` |
+
+## Vendor-official adapters
+
+Maintained by the platform vendor themselves.
+
+| Channel | Package |
+|---|---|
+| [Email (Resend)](/shmastra/features/channel-email) | `@resend/chat-sdk-adapter` |
+| [Liveblocks](/shmastra/features/channel-liveblocks) | `@liveblocks/chat-sdk-adapter` |
+| [Zernio (social DMs)](/shmastra/features/channel-zernio) | `@zernio/chat-sdk-adapter` |
+
+## Community adapters
+
+| Channel | Package |
+|---|---|
+| [Mattermost](/shmastra/features/channel-mattermost) | `chat-adapter-mattermost` |
+| [Webex](/shmastra/features/channel-webex) | `@bitbasti/chat-adapter-webex` |
+| [Zalo](/shmastra/features/channel-zalo) | `chat-adapter-zalo` |
 
 ## How to connect a channel (any channel)
 
