@@ -52,12 +52,12 @@ create named profiles and switch via the header dropdown. See
   Sonnet with full sandbox access.
 - [Logs](/cloud/manage-ui/logs) — pm2 logs from `shmastra` and
   `healer`.
+- [Stats](/cloud/manage-ui/stats) — live CPU, memory, and disk
+  sparklines for the sandbox process, updated every few seconds.
+- [Trace](/cloud/manage-ui/trace) — observability view showing recent
+  agent traces streamed from inside the sandbox.
 - [Files](/cloud/manage-ui/files) — full file manager.
 - [Terminal](/cloud/manage-ui/terminal) — arbitrary shell commands.
-- **Stats** — live CPU, memory, and disk sparklines for the sandbox
-  process, updated every few seconds.
-- **Trace** — observability view showing recent agent traces streamed
-  from inside the sandbox.
 
 ## CLI alternatives
 
