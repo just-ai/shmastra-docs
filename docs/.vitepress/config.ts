@@ -112,8 +112,11 @@ export default defineConfig({
             { text: 'Applying updates', link: '/cloud/manage-ui/applying-updates' },
             { text: 'Chat with agent', link: '/cloud/manage-ui/chat-with-agent' },
             { text: 'Logs', link: '/cloud/manage-ui/logs' },
+            { text: 'Stats', link: '/cloud/manage-ui/stats' },
+            { text: 'Trace', link: '/cloud/manage-ui/trace' },
             { text: 'Files', link: '/cloud/manage-ui/files' },
             { text: 'Terminal', link: '/cloud/manage-ui/terminal' },
+            { text: 'Env profiles', link: '/cloud/manage-ui/env-profiles' },
           ],
         },
         {

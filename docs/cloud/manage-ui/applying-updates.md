@@ -23,8 +23,9 @@ phase progress bar per sandbox and streams logs over SSE.
 1. **connect** — open an E2B connection to the sandbox.
 2. **fetch** — configure git identity, commit any local sandbox
    changes (so no work is lost), fetch `origin`, and check whether
-   we're behind `main`.
-3. **merge** — create a git worktree on `origin/main`, merge any
+   we're behind the update branch (default: `main`; configurable via
+   [`SANDBOX_UPDATE_BRANCH`](/cloud/setup/env-vars)).
+3. **merge** — create a git worktree on the update branch, merge any
    local commits into it. The dev server keeps running in the main
    working tree throughout this phase.
 4. **install** — `pnpm install` inside the worktree.
@@ -34,15 +35,22 @@ phase progress bar per sandbox and streams logs over SSE.
    any required schema migrations against the worktree copy. If
    migration fails, the original snapshot is restored and the update
    aborts — the sandbox stays on its current schema and code.
-7. **apply** — fast-forward the main branch to `origin/main` and
-   run `pnpm install` in the main directory.
+7. **apply** — fast-forward the main branch to the update branch tip
+   and run `pnpm install` in the main directory.
 8. **patch** — run any pending scripts from `scripts/patches/` (see
    [Patches](/cloud/day-2/patches)). Each sandbox tracks its
-   `version` in Supabase; only newer patches are applied.
+   `version` in Supabase; only newer patches are applied. This phase
+   also unconditionally re-syncs cloud-managed artifacts (MCP server
+   config, skill files) to ensure every sandbox has the latest
+   versions even if no code update was needed.
 9. **restart** — stop pm2, swap migrated databases into place (if a
    migration ran in phase 6), and restart pm2 processes (`shmastra`,
    `healer`). The UI waits for a healthy response on port 4111 before
    calling the update complete.
+
+> **Phases 8 and 9 always run**, even when the sandbox is already up
+> to date with the update branch. This keeps MCP configuration, skill
+> files, and other cloud-managed artifacts in sync on every pass.
 
 If any phase fails, the pipeline stops and reports. The worktree is
 thrown away; the main tree is untouched until phase 7. Only phases

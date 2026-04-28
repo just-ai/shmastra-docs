@@ -35,6 +35,7 @@ At least one of these is required; all three are recommended.
 | Variable | Description |
 |---|---|
 | `COMPOSIO_API_KEY` | Enables the Composio toolkit story inside user sandboxes. Get it from <https://platform.composio.dev>. |
+| `SANDBOX_UPDATE_BRANCH` | Branch that sandboxes pull from when you run an update. Defaults to `main`. Change this if you want all sandboxes to track a release or staging branch instead. Must match the regex `[a-zA-Z0-9_/.-]+`. |
 
 ## Remember
 
