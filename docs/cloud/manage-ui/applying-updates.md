@@ -15,46 +15,62 @@ worktree.
 
 Web-UI updates run in parallel with a concurrency cap of 5.
 
-## The 9 phases
+## The 8 phases
 
 Every update runs through these phases in order. The UI shows a
 phase progress bar per sandbox and streams logs over SSE.
 
-1. **connect** — open an E2B connection to the sandbox.
-2. **fetch** — configure git identity, commit any local sandbox
+1. **fetch** — configure git identity, commit any local sandbox
    changes (so no work is lost), fetch `origin`, and check whether
    we're behind the update branch (default: `main`; configurable via
    [`SANDBOX_UPDATE_BRANCH`](/cloud/setup/env-vars)).
-3. **merge** — create a git worktree on the update branch, merge any
+2. **merge** — create a git worktree on the update branch, merge any
    local commits into it. The dev server keeps running in the main
    working tree throughout this phase.
-4. **install** — `pnpm install` inside the worktree.
-5. **build** — `pnpm dry-run` to verify the build compiles. If it
+3. **install** — `pnpm install` inside the worktree.
+4. **build** — `pnpm dry-run` to verify the build compiles. If it
    fails, the pipeline bails out without touching the main tree.
-6. **migrate** — snapshot the observability database (DuckDB) and run
-   any required schema migrations against the worktree copy. If
-   migration fails, the original snapshot is restored and the update
-   aborts — the sandbox stays on its current schema and code.
-7. **apply** — fast-forward the main branch to the update branch tip
+5. **migrate** — stop pm2 briefly to flush DuckDB's WAL, snapshot
+   the observability database, and run any required schema migrations
+   against the worktree copy. If migration fails, the original
+   snapshot is restored and the update aborts — the sandbox stays on
+   its current schema and code.
+6. **apply** — fast-forward the main branch to the update branch tip
    and run `pnpm install` in the main directory.
-8. **patch** — run any pending scripts from `scripts/patches/` (see
+7. **patch** — run any pending scripts from `scripts/patches/` (see
    [Patches](/cloud/day-2/patches)). Each sandbox tracks its
    `version` in Supabase; only newer patches are applied. This phase
    also unconditionally re-syncs cloud-managed artifacts (MCP server
    config, skill files) to ensure every sandbox has the latest
    versions even if no code update was needed.
-9. **restart** — stop pm2, swap migrated databases into place (if a
-   migration ran in phase 6), and restart pm2 processes (`shmastra`,
-   `healer`). The UI waits for a healthy response on port 4111 before
-   calling the update complete.
+8. **restart** — stop pm2, swap migrated databases into place (if a
+   migration ran in phase 5), and restart pm2 processes (`shmastra`,
+   `healer`). The UI polls the `/api/version` endpoint and waits
+   until the server reports the new version before calling the update
+   complete.
 
-> **Phases 8 and 9 always run**, even when the sandbox is already up
+> **Phases 7 and 8 always run**, even when the sandbox is already up
 > to date with the update branch. This keeps MCP configuration, skill
 > files, and other cloud-managed artifacts in sync on every pass.
 
-If any phase fails, the pipeline stops and reports. The worktree is
-thrown away; the main tree is untouched until phase 7. Only phases
-7–9 mutate production state.
+Only phases 6–8 mutate production state. The pipeline is safe to
+cancel or retry at any earlier phase.
+
+## Rollback on failure
+
+If phase 6 (apply) succeeds but any later phase fails, the pipeline
+automatically rolls the sandbox back to its exact pre-update state:
+
+1. `git reset --hard` to the commit that was HEAD before the merge.
+2. Restore the DuckDB snapshot taken in phase 5 (if a migration ran).
+3. Re-run `pnpm install` to sync `node_modules` with the restored
+   `package.json` / lockfile.
+4. Restart pm2 on the now-consistent old code and schema.
+
+The result is that a failed update leaves the sandbox byte-equivalent
+to its state before the update started. Users experience a brief
+downtime window (the restart in step 4) but return to a working
+sandbox on the previous version.
 
 ## Conflict resolution
 
