@@ -49,6 +49,7 @@ one silently.
 | `CORS_ORIGIN` | Extra allowed origin for the Mastra server. |
 | `MASTRA_AUTH_TOKEN` | Bearer token required for Mastra API calls when set. |
 | `USER_ID` | Pre-pins the current user id (used by Shmastra Cloud sandboxes). |
+| `GOOGLE_BASE_URL` | Override the base URL for Google / Gemini API calls — useful for corporate proxies, Vertex AI endpoints, or any custom gateway. The general pattern is `{PROVIDER_ID_SCREAMING_SNAKE}_BASE_URL`; `GEMINI_BASE_URL` is also accepted for the `gemini` provider alias. |
 
 ## Per-agent variables
 
@@ -75,7 +76,6 @@ suggests the correct prefixed names — you usually don't need to guess.
 | `.storage/mastra.duckdb` | Observability database (DuckDB): metrics, timeseries. |
 | `.storage/code.db` | The mastracode harness database. |
 | `files/` | Uploaded files. Accessible via generated public URLs on localhost. |
-| `.mastra/output/` | Build output (do not edit). |
 | `src/mastra/public/.mastracode/skills/` | Coding agent skill files (project-level). Shmastra reads these to prime the coding agent with project-specific knowledge and custom behaviors. |
 | `~/.mastracode/skills/` | Global coding agent skill files, shared across all projects on this machine. Loaded alongside the project-level skills — useful for skills you want available in every project without copying them. |
 
