@@ -25,9 +25,9 @@ features:
 
 ## How they relate
 
-**Shmastra** is the template a developer runs locally with
-`npx create-mastra`. It turns Mastra Studio's chat into a vibe-coding
-surface: type what you want in plain English, and Shmastra generates
+**Shmastra** is a [Mastra](https://mastra.ai/) template a developer runs locally with
+`npx create-mastra@latest --template https://github.com/just-ai/shmastra`. It turns Mastra Studio's chat into a vibe-coding
+surface: type what you want, and Shmastra generates
 agents, workflows, channels, and web apps for you.
 
 **Shmastra Cloud** is a multi-tenant host for Shmastra. It wraps the same
@@ -36,5 +36,4 @@ virtual-key AI gateway, and an admin Manage UI for provisioning,
 updates, and observability. One engineer deploys it; everyone else just
 opens a browser.
 
-If you're just getting started, follow the Shmastra path first — you can
-always move to Cloud once you want to share your agents with your team.
+If you're just getting started, follow the Shmastra path first. You can deploy your Shmastra Cloud once you want to let your teammates use Shmastra too.

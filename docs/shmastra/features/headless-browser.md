@@ -29,8 +29,7 @@ export const myAgent = new Agent({
 ```
 
 Shmastra makes sure Playwright's Chromium Headless Shell is installed
-(the template ships `npm run install-browsers`); Docker images include
-it by default.
+(the template ships `npm run install-browsers`).
 
 ## What the agent can do
 

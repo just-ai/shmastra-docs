@@ -21,6 +21,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Shmastra', link: '/shmastra/', activeMatch: '^/shmastra/' },
       { text: 'Shmastra Cloud', link: '/cloud/', activeMatch: '^/cloud/' },
+      { text: 'Releases', link: '/releases/', activeMatch: '^/releases/' },
       { text: 'GitHub', link: 'https://github.com/just-ai/shmastra' },
     ],
 
@@ -79,7 +80,6 @@ export default defineConfig({
         {
           text: 'Operating',
           items: [
-            { text: 'Running with Docker', link: '/shmastra/running-with-docker' },
             { text: 'Troubleshooting', link: '/shmastra/troubleshooting' },
           ],
         },
@@ -147,6 +147,16 @@ export default defineConfig({
           text: 'Operating',
           items: [
             { text: 'Troubleshooting', link: '/cloud/troubleshooting' },
+          ],
+        },
+      ],
+
+      '/releases/': [
+        {
+          text: 'Releases',
+          items: [
+            { text: 'All releases', link: '/releases/' },
+            { text: 'v0.1.0', link: '/releases/v0.1.0' },
           ],
         },
       ],

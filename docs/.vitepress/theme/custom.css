@@ -5,6 +5,7 @@
     'segoe ui', 'helvetica neue', helvetica, arial, sans-serif;
   --vp-font-family-mono: 'Geist Mono', Menlo, Consolas, Monaco, 'Liberation Mono',
     'Lucida Console', monospace;
+  --vp-sidebar-width: 240px;
 }
 
 /* ── Dark theme (Mastra-style) ─────────────────────────────────────── */
@@ -61,13 +62,20 @@
   color: #46f488;
 }
 
+/* ── Doc footer pushed to bottom on short pages ────────────────────── */
+.VPDoc .content-container {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--vp-nav-height) - 96px);
+}
+
+.VPDoc .main {
+  flex: 1;
+}
+
 /* ── Content area ──────────────────────────────────────────────────── */
 .dark .VPContent {
   background-color: #050505;
-}
-
-.dark .VPDoc .container {
-  max-width: 900px;
 }
 
 /* ── Headings ──────────────────────────────────────────────────────── */
@@ -161,17 +169,26 @@
 
 /* ── Home page hero ────────────────────────────────────────────────── */
 .dark .VPHero .name {
-  background: linear-gradient(135deg, #46f488 0%, #ffffff 50%);
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 35%, #46f488 50%, #ffffff 65%, #ffffff 100%);
+  background-size: 300% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: hero-shimmer 3s linear infinite;
+}
+
+@keyframes hero-shimmer {
+  from { background-position: 100% center; }
+  to   { background-position: 0% center; }
 }
 
 :root:not(.dark) .VPHero .name {
-  background: linear-gradient(135deg, #0aad4a 0%, #111111 50%);
+  background: linear-gradient(90deg, #111111 0%, #111111 35%, #16a34a 50%, #111111 65%, #111111 100%);
+  background-size: 300% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: hero-shimmer 3s linear infinite;
 }
 
 /* ── Search ────────────────────────────────────────────────────────── */
@@ -191,6 +208,73 @@
 .dark .VPButton.brand:hover {
   background-color: #1afb6f;
   border-color: #1afb6f;
+}
+
+/* ── Release cards (match VPFeature exactly) ───────────────────────── */
+.release-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 32px -8px 0;
+}
+
+.release-item {
+  padding: 8px;
+  width: 100%;
+}
+
+.release-card {
+  display: block;
+  border: 1px solid var(--vp-c-bg-soft);
+  border-radius: 12px;
+  height: 100%;
+  background-color: var(--vp-c-bg-soft);
+  transition: border-color 0.25s, background-color 0.25s;
+  text-decoration: none !important;
+}
+
+.release-card:hover {
+  border-color: var(--vp-c-brand-1);
+  text-decoration: none !important;
+}
+
+.release-card .box {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  height: 100%;
+}
+
+.release-card .title {
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.release-card .details {
+  flex-grow: 1;
+  padding-top: 8px;
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vp-c-text-2);
+  margin: 0;
+}
+
+.release-card .link-text {
+  padding-top: 8px;
+}
+
+.release-card .link-text-value {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vp-c-brand-1);
+  margin: 0;
 }
 
 /* ── Scrollbar (subtle) ────────────────────────────────────────────── */
