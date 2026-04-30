@@ -21,11 +21,11 @@ fallback options when a provider is down.
 
 Shmastra organises models into three tiers used for different tasks:
 
-| Tier | Used for |
-|---|---|
-| **fast** | Quick lookups and lightweight rewrites. |
-| **general** | Most agent responses (default). |
-| **best** | Complex reasoning: architecture decisions, conflict resolution. |
+| Tier | Current model priority | Used for |
+|---|---|---|
+| **fast** | gpt-5.4-nano → gemini-3.1-flash-lite → claude-sonnet-4-6 | Quick lookups and lightweight rewrites. |
+| **general** | gpt-5.4-mini → claude-sonnet-4-6 → gemini-3-flash | Most agent responses (default). |
+| **best** | gpt-5.4 → claude-opus-4-7 → gemini-3.1-pro | Complex reasoning: architecture decisions, conflict resolution. |
 
 Each tier holds a priority-ordered list of models across providers.
 When a request runs, Shmastra picks every model in that tier whose
@@ -39,6 +39,11 @@ key you get automatic provider-level redundancy for free. If one
 provider is down or rate-limits you, calls fall through to the next
 one silently.
 
+> **Coding agent models.** The widget's coding agent uses a separate
+> priority list tuned for code-generation tasks:
+> **claude-opus-4-7 → gpt-5.5 → gemini-3.1-pro**. The first model
+> whose provider key is present wins.
+
 ## Optional
 
 | Variable | Purpose |
@@ -49,6 +54,8 @@ one silently.
 | `CORS_ORIGIN` | Extra allowed origin for the Mastra server. |
 | `MASTRA_AUTH_TOKEN` | Bearer token required for Mastra API calls when set. |
 | `USER_ID` | Pre-pins the current user id (used by Shmastra Cloud sandboxes). |
+| `GOOGLE_BASE_URL` | Override the base URL for **Google** provider API calls (e.g. route through an internal proxy or gateway). When set, Shmastra replaces the default models.dev endpoint with this URL for all `google/*` model requests. |
+| `GEMINI_BASE_URL` | Same as `GOOGLE_BASE_URL` but for the `gemini` provider alias. Both can be set independently if needed. |
 
 ## Per-agent variables
 
