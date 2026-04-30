@@ -7,6 +7,10 @@ without touching Node, npm, or a terminal.
 If that’s not you — if you just want to build agents on your own
 machine — head to [Shmastra for developers](/shmastra/) instead.
 
+<video src="https://github.com/user-attachments/assets/28805105-827c-459b-bd77-8536d46710ae" controls style="width:100%;border-radius:8px;margin:1rem 0"></video>
+
+<a href="/shmastra-docs/overview.html" style="display:inline-block;margin:0.5rem 0 1.5rem;padding:0.5rem 1.25rem;background:#46f488;color:#050505;border-radius:6px;font-weight:600;text-decoration:none">See the overview</a>
+
 ## What your teammates get
 
 After you deploy Cloud once, every colleague who signs in gets:
