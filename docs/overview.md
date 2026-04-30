@@ -8,6 +8,6 @@ import { useData } from 'vitepress'
 
 onMounted(() => {
   const { site } = useData()
-  window.location.replace(site.value.base + 'overview.html')
+  window.location.replace(site.value.base + 'deck.html')
 })
 </script>
