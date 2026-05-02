@@ -19,6 +19,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Overview', link: '/overview' },
       { text: 'Shmastra', link: '/shmastra/', activeMatch: '^/shmastra/' },
       { text: 'Shmastra Cloud', link: '/cloud/', activeMatch: '^/cloud/' },
       { text: 'Releases', link: '/releases/', activeMatch: '^/releases/' },

@@ -9,6 +9,10 @@ services, add channels, or build a companion web app.
 
 If you can type, you can ship an agent.
 
+<video src="https://github.com/user-attachments/assets/28805105-827c-459b-bd77-8536d46710ae" controls style="width:100%;border-radius:8px;margin:1rem 0"></video>
+
+<a href="/shmastra-docs/deck.html" style="display:inline-block;margin:0.5rem 0 1.5rem;padding:0.5rem 1.25rem;background:#46f488;color:#050505;border-radius:6px;font-weight:600;text-decoration:none">See the overview</a>
+
 ## What the widget can do for you
 
 | Feature | Ask the widget something like |
