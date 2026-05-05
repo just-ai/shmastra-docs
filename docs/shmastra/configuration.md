@@ -50,7 +50,7 @@ one silently.
 |---|---|
 | `COMPOSIO_API_KEY` | Unlocks the Composio toolkits search/connect flow. Get it from <https://platform.composio.dev>. |
 | `PORT` | Dev-server port. Defaults to `4111`. |
-| `PUBLIC_URL` | Public base URL of the dev server. Needed for webhook-based channels (Telegram, Slack…). If not set, Shmastra derives it from the E2B sandbox URL when running in Cloud; otherwise channels fall back to long-polling where supported. |
+| `PUBLIC_URL` | Public base URL of the dev server. Shmastra reads this **once at startup** to derive the Mastra Studio's public origin (`studioHost`, `studioProtocol`, `studioPort`) and to build webhook URLs for channels (Telegram, Slack…). If not set, Shmastra derives it automatically from the E2B sandbox URL when running in Cloud. Self-hosted deployments behind a reverse proxy should always set this so both the Studio and webhook channels use the correct public origin. |
 | `CORS_ORIGIN` | Extra allowed origin for the Mastra server. |
 | `MASTRA_AUTH_TOKEN` | Bearer token required for Mastra API calls when set. |
 | `USER_ID` | Pre-pins the current user id (used by Shmastra Cloud sandboxes). |
