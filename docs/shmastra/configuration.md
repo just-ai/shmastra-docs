@@ -8,11 +8,11 @@ whenever `.env` changes.
 
 ## Required — at least one LLM provider
 
-```ini
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
-GOOGLE_GENERATIVE_AI_API_KEY=AI...
-```
+| Variable | Where to get your key |
+|---|---|
+| `OPENAI_API_KEY` | <https://platform.openai.com/api-keys> |
+| `ANTHROPIC_API_KEY` | <https://console.anthropic.com/settings/keys> |
+| `GOOGLE_GENERATIVE_AI_API_KEY` | <https://aistudio.google.com/app/apikey> |
 
 Any one of these is enough to get started; more keys give Shmastra more
 fallback options when a provider is down.
