@@ -2,7 +2,7 @@
 
 Shmastra can generate a full standalone web app for your agent or
 workflow — a dashboard, a custom chat surface, a review UI — served
-right out of your Mastra project at `/shmastra/apps/<name>`.
+right out of your Mastra project at `/apps/<name>`.
 
 Apps run in the browser as-is: no build step, no bundler. The stack is
 Preact + [DaisyUI](https://daisyui.com/) (on Tailwind) + `htm` for
@@ -33,7 +33,7 @@ JSX-less templates, all loaded via import maps from `esm.sh`.
    `src/mastra/routes/` under `/shmastra/api/apps/<name>/` and
    registers it.
 4. Mastra Studio shows the app link; opening it navigates to
-   `/shmastra/apps/<name>` in a new tab.
+   `/apps/<name>` in a new tab.
 
 ## Components ready out of the box
 
@@ -58,10 +58,10 @@ An agent can return a markdown link to the app it just generated —
 the widget renders it as a normal link:
 
 ```markdown
-Here is your application: [Open dashboard](/shmastra/apps/sales)
+Here is your application: [Open dashboard](/apps/sales)
 ```
 
-Clicking it opens the app (served at `/shmastra/apps/<name>` by the
+Clicking it opens the app (served at `/apps/<name>` by the
 Shmastra dev server) in a new tab.
 
 ## Tips
