@@ -73,3 +73,6 @@ Shmastra dev server) in a new tab.
   — the agent can generate an HTML file and return a link to it.
 - **No build step = fast iteration.** Every save hot-reloads the
   dev server.
+- **On Shmastra Cloud, share apps with teammates.** Generate a stable
+  link from `/apps/<name>` that any WorkOS-authed user in your org
+  can open — see [Sharing apps](/cloud/sharing-apps).
