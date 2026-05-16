@@ -136,6 +136,7 @@ dashboard or any page outside Mastra Studio.
     element: '#my-container',  // CSS selector or HTMLElement (optional)
     width: '30rem',            // CSS value (optional)
     height: '80vh',            // CSS value (optional)
+    openOnStart: true,         // open panel immediately (optional)
   });
 </script>
 ```
@@ -152,7 +153,8 @@ via `data-*` attributes:
 ```html
 <div id="assistant-widget"
      data-api-base-url="http://localhost:4111"
-     data-theme="light">
+     data-theme="light"
+     data-open-on-start="true">
 </div>
 <script src="assistant-widget.iife.js"></script>
 ```
@@ -160,12 +162,13 @@ via `data-*` attributes:
 ### Options
 
 | Option | Type | Default | Description |
-|---|---|---|---|
+|---|---|---|-|
 | `element` | `HTMLElement \| string` | new `<div>` appended to `<body>` | Mount container. Accepts a CSS selector string or an `HTMLElement`. |
 | `apiBaseUrl` | `string` | `""` | Base URL of the Shmastra server (e.g. `http://localhost:4111`). |
 | `theme` | `'light' \| 'dark' \| 'system'` | `'system'` | Color theme. `'system'` tracks `prefers-color-scheme` and updates live. |
 | `width` | `string` | `25rem` | Panel width — any CSS length value. |
 | `height` | `string` | `calc(100vh - 6rem)` | Panel height — any CSS length value. |
+| `openOnStart` | `boolean` | `false` | Open the widget panel automatically when the script loads, without waiting for the user to click the toggle button. |
 
 ### CSS customization
 
