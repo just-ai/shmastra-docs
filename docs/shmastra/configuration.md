@@ -44,6 +44,12 @@ one silently.
 > **claude-opus-4-7 → gpt-5.5 → gemini-3.1-pro**. The first model
 > whose provider key is present wins.
 
+> **Automatic model upgrade.** If the coding widget has a thread that was
+> started on `claude-opus-4-6`, Shmastra automatically routes those requests
+> to `claude-opus-4-7` when it is available (i.e. your Anthropic API key is
+> set). The upgrade is transparent and per-request — no action required on
+> your part.
+
 ## Optional
 
 | Variable | Purpose |
