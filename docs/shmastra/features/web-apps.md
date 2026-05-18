@@ -64,6 +64,16 @@ Here is your application: [Open dashboard](/apps/sales)
 Clicking it opens the app (served at `/apps/<name>` by the
 Shmastra dev server) in a new tab.
 
+## Sharing with Shmastra Cloud
+
+On Shmastra Cloud, every app at `/apps/<name>` gets a **Share** button
+in the top-right corner. Clicking it generates a stable link at
+`/apps/shared/<name>-<slug>` that any member of your WorkOS organisation
+can open — no deployment or credentials needed on their side.
+
+See [App sharing](/cloud/app-sharing) for the full flow, guest
+permissions, and how to revoke access.
+
 ## Tips
 
 - **Say which workflow or agent drives the app.** *"A dashboard for

@@ -12,6 +12,23 @@ things, and walk away. Without the healer, every messed-up agent or
 bad dependency install would page you. With it, most failures recover
 themselves.
 
+## When the healer runs
+
+The healer activates in two distinct situations:
+
+1. **After a runtime crash** — when the running dev server crashes or
+   becomes unresponsive (described in detail below).
+2. **During sandbox setup or resume** — if the initial provisioning
+   or sandbox wake-up fails (e.g. the dev server won’t start after
+   resuming a paused sandbox), the healer is invoked automatically.
+   From your perspective in the Manage UI, the sandbox shows
+   `healing` status rather than going straight to `broken`.
+
+In both cases the logic is the same: a Mastra agent reads the logs,
+diagnoses the root cause, applies a minimal fix, and restarts the
+server. If it succeeds, status returns to `ready`; if all three
+attempts fail, status becomes `broken`.
+
 ## How crashes are detected
 
 Four independent signals:
@@ -64,8 +81,11 @@ When any signal confirms a crash:
 ## Status transitions
 
 ```
+provisioning/resuming → (setup error) → healing → ready
+                                                  → broken (after 3 failed attempts)
+
 running → (crash) → healing → ready
-                            → broken (after 3 failed attempts)
+                             → broken (after 3 failed attempts)
 ```
 
 ## What the healer can touch

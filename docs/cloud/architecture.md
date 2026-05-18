@@ -18,21 +18,27 @@ A one-page tour of what the engineer actually has to stand up.
 │     ├─► /studio/*        static Mastra Studio bundle    │
 │     ├─► /api/mastra/*    proxy → user's E2B sandbox     │
 │     ├─► /api/gateway/*   AI proxy (Edge): vk → real key │
+│     ├─► /api/git/*       git proxy: PROJECT_TOKEN →     │
+│     │                    GITLAB_SERVICE_TOKEN            │
 │     └─► /workspace       sandbox bootstrap page         │
 └────────┬────────────────────────────────────────────────┘
          │
-         ├──────────────► Supabase (users, sandboxes)
+         ├──────────────► Supabase (users, sandboxes, projects)
          │
          ├──────────────► WorkOS (sign-in, org membership)
          │
-         └──────────────► E2B (per-user Linux sandboxes)
+         ├──────────────► E2B (per-user Linux sandboxes)
+         │
+         └──────────────► GitLab (per-user project repos, optional)
 
                 ┌────────────────────────────────┐
                 │ E2B sandbox (one per user)     │
                 │                                │
                 │  pm2                           │
                 │   ├─ shmastra  (pnpm dev, 4111)│
-                │   └─ healer    (self-heal bot) │
+                │   ├─ healer    (self-heal bot) │
+                │   └─ project-watcher (auto-    │
+                │        sync to GitLab, opt.)   │
                 │                                │
                 │  .env has virtual key only     │
                 └────────────────────────────────┘
@@ -59,6 +65,7 @@ A one-page tour of what the engineer actually has to stand up.
 - **`sandboxes`** — one per user. Stores E2B sandbox id, status
   (`provisioning` | `ready` | `healing` | `broken` | `paused`), the
   patch `version` currently applied, timestamps.
+- **`projects`** — one per user (optional). Stores the GitLab project id, `git_url`, and the per-user `project_token` used by the sandbox to authenticate against the git proxy. Only populated when auto-sync is enabled.
 - **`user_sandboxes`** — a view joining the two for admin queries.
 
 Migrations live in `supabase/migrations/`. The first is
