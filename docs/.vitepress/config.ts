@@ -117,6 +117,7 @@ export default defineConfig({
             { text: 'Onboarding your team', link: '/cloud/onboarding-your-team' },
             { text: 'Workflow scheduling', link: '/cloud/scheduling' },
             { text: 'App sharing', link: '/cloud/app-sharing' },
+            { text: 'Project persistence', link: '/cloud/project-persistence' },
           ],
         },
         {

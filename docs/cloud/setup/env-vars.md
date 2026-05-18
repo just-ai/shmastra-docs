@@ -37,6 +37,17 @@ At least one of these is required; all three are recommended.
 | `COMPOSIO_API_KEY` | Enables the Composio toolkit story inside user sandboxes. Get it from <https://platform.composio.dev>. |
 | `SANDBOX_UPDATE_BRANCH` | Branch that sandboxes pull from when you run an update. Defaults to `main`. Change this if you want all sandboxes to track a release or staging branch instead. Must match the regex `[a-zA-Z0-9_/.-]+`. |
 
+## GitLab project persistence (optional)
+
+When all three variables are set, each user's sandbox is backed by a
+private GitLab repository. See [Project persistence](/cloud/project-persistence).
+
+| Variable | Description |
+|---|---|
+| `GITLAB_SERVICE_TOKEN` | Group access token with scopes `api` + `write_repository`. Absence disables project auto-sync entirely. |
+| `GITLAB_GROUP_ID` | Numeric ID of the GitLab group that will host per-user project repos. |
+| `GITLAB_API_URL` | GitLab API base URL. Defaults to `https://gitlab.com/api/v4`. Override for self-hosted GitLab. |
+
 ## Remember
 
 - **Sandboxes never see these.** Real provider keys stay on Vercel;
