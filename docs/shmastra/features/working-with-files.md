@@ -1,16 +1,39 @@
 # Working with files
 
+The Shmastra chat widget accepts two kinds of file input:
+
+- **Images** (JPEG, PNG, GIF, WebP) — sent directly to the model as a native vision input. The agent sees the image and can answer visual questions without any conversion step.
+- **Documents** (PDF, DOCX, XLSX, HTML, and more) — converted to text by [markitdown](https://github.com/microsoft/markitdown) and made queryable via `queryDocumentsTool`.
+
+## Sending images
+
+Drag, paste, or click the paperclip to attach a JPEG, PNG, GIF, or WebP file. The image is forwarded to the model as-is — no preprocessing. Any model tier that supports vision (all current defaults) will see the image.
+
+### Example prompts
+
+> *What does this diagram show?*
+
+> *Debug the error in this screenshot.*
+
+> *Describe this chart and extract the key numbers as JSON.*
+
+> *What UI improvements would you suggest based on this mockup?*
+
+Supported image MIME types: `image/jpeg`, `image/png`, `image/gif`, `image/webp`. Files with any other MIME type are treated as documents and processed through markitdown (see below).
+
+## Document RAG
+
 Every agent Shmastra generates is equipped with `queryDocumentsTool` —
 a RAG tool built on top of [markitdown](https://github.com/microsoft/markitdown).
-Upload a file in the chat and the agent can answer questions about it.
+Upload a document and the agent can answer questions about it.
 
-## Supported formats
+### Supported formats
 
 PDF, DOCX, PPTX, XLSX, HTML, and anything else markitdown can convert
 to text (that's most common office formats plus audio transcripts).
 Processed text is capped at 200 000 characters per file.
 
-## Example prompts
+### Example prompts
 
 Drag a PDF into the widget (or click the paperclip), then:
 
@@ -27,7 +50,7 @@ The last prompt is slightly different: it wires the file into the
 agent's **instructions**, so every future chat starts with that
 knowledge baked in.
 
-## What happens
+### What happens
 
 1. The file is saved under `files/` in the project root.
 2. On localhost, Shmastra generates a temporary public URL so the

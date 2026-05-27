@@ -25,13 +25,38 @@ PM2 process inside the sandbox:
    per-user `PROJECT_TOKEN`; the GitLab service token never leaves
    the server.
 4. **Restore.** When a user's sandbox is re-provisioned on a fresh
-   E2B instance, Cloud merges the user's saved GitLab branch back
-   over the fresh template before starting the dev server. The user's
-   project continues where it left off.
+   E2B instance, Cloud force-pulls the user's saved GitLab branch
+   (`git reset --hard project/main`) over the fresh template before
+   starting the dev server. The user's project continues where it
+   left off.
+5. **Sync.** When code is pushed to the git proxy by anyone other than
+   `project-watcher` (the watcher tags its own pushes via `User-Agent`
+   so they are not counted as external triggers), Cloud sets the
+   sandbox status to `syncing` and runs `sync.sh` inside the sandbox.
+   The script stops the dev server, force-pulls the latest branch,
+   reinstalls dependencies, and restarts. This lets you push updates
+   directly from a local clone to the GitLab project and have them
+   appear in the running sandbox immediately.
 
 The update pipeline coordinates with the watcher: it stops the daemon
 before applying an update and starts it again in the `finally` block,
 so no changes are committed mid-update.
+
+## Syncing status
+
+While `sync.sh` is running, the workspace page shows a **Syncing**
+indicator with its own status dot and message. The sandbox is
+accessible again once the dev server comes back up. If the sync fails
+(e.g. a dependency install error), the sandbox status reverts to
+`broken` and the error tail is written to `/tmp/shmastra-sync-failure`
+inside the sandbox for inspection.
+
+## Studio project button
+
+When auto-sync is enabled, Studio shows a **project** button in the
+top toolbar. Clicking it opens the user's GitLab project in a new tab,
+making it easy to browse commit history or push updates from a local
+clone.
 
 ## Env-var manifest and secret restoration
 
@@ -95,9 +120,10 @@ idempotent.
   — they are validated against the manifest, passed to
   `provisionSandbox` in-process, and written directly to the
   sandbox's `.env`. They are never logged or stored in the database.
-- The watcher skips commits while a Git merge is in progress
-  (it checks `MERGE_HEAD`, `REBASE_HEAD`, and unresolved index
-  entries) to avoid committing conflict markers.
+- The watcher tags its own pushes with a custom `User-Agent` so the
+  git proxy does not treat them as external sync triggers — only
+  pushes from outside the sandbox (e.g. from a developer's local
+  clone) kick off `sync.sh`.
 
 ## What happens without GitLab configured
 

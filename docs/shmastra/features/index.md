@@ -13,7 +13,7 @@ and a short note on what it generates behind the scenes.
 
 ## Give your agent superpowers
 
-- [Working with files](/shmastra/features/working-with-files) — RAG over PDFs, DOCX, XLSX, HTML…
+- [Working with files](/shmastra/features/working-with-files) — send images directly to the model (vision), or use RAG over PDFs, DOCX, XLSX, HTML…
 - [Web search](/shmastra/features/web-search) — live web results
 - [Headless browser](/shmastra/features/headless-browser) — Playwright-backed browsing and scraping
 - [Rich chat replies](/shmastra/features/rich-chat) — HTML, iframes, charts in the chat

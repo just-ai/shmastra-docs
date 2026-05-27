@@ -63,7 +63,7 @@ A one-page tour of what the engineer actually has to stand up.
 
 - **`users`** — WorkOS id ↔ Supabase user, includes `virtual_key`.
 - **`sandboxes`** — one per user. Stores E2B sandbox id, status
-  (`provisioning` | `ready` | `healing` | `broken` | `paused`), the
+  (`provisioning` | `ready` | `healing` | `broken` | `syncing` | `paused`), the
   patch `version` currently applied, timestamps.
 - **`projects`** — one per user (optional). Stores the GitLab project id, `git_url`, and the per-user `project_token` used by the sandbox to authenticate against the git proxy. Only populated when auto-sync is enabled.
 - **`user_sandboxes`** — a view joining the two for admin queries.
@@ -79,7 +79,8 @@ Migrations live in `supabase/migrations/`. The first is
 | `provisioning` | E2B sandbox is being created from the template. |
 | `ready` | Mastra dev server is healthy on port 4111. |
 | `healing` | [Healer agent](/cloud/day-2/healer-agent) is diagnosing a crash. |
-| `broken` | Healer gave up after 3 attempts — admin action needed. |
+| `broken` | Healer gave up after 3 attempts and entered passive mode — it still polls health but stops agent invocations. Admin action or sandbox self-recovery needed. |
+| `syncing` | Git proxy received an external push; `sync.sh` is force-pulling the latest code and restarting the dev server. |
 | `paused` | Sandbox suspended for inactivity; resumes on the next request. |
 
 ## Key files
