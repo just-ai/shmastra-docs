@@ -7,13 +7,13 @@ deployment.
 
 | Column | What it shows |
 |---|---|
-| **Email** | The signed-in user from WorkOS. |
+| **Email** | The signed-in user from WorkOS. When [project auto-sync](/cloud/project-persistence) is enabled, a small repo icon appears next to the email; clicking it opens the user's GitLab project in a new tab. |
 | **Sandbox ID** | The E2B sandbox identifier. Click to open the detail panel. |
-| **Status** | `provisioning` · `ready` · `healing` · `broken` · `paused`. |
+| **Status** | `provisioning` · `ready` · `healing` · `broken` · `syncing` · `paused`. |
 | **Last activity** | Time since the last request to this sandbox. |
 | **Version** | The patch `version` from the `sandboxes` table — the numeric prefix of the highest-numbered [patch](/cloud/day-2/patches) applied. |
 
-The data is a join of Supabase's `users` and `sandboxes` tables
+The data is a join of Supabase's `users`, `sandboxes`, and `projects` tables
 (via the `user_sandboxes` view).
 
 ## Selecting sandboxes
@@ -44,7 +44,8 @@ The data is a join of Supabase's `users` and `sandboxes` tables
 | `provisioning` | Just booted. If it doesn't move to `ready` in a minute, see [troubleshooting](/cloud/troubleshooting). |
 | `ready` | Normal. Shmastra is responding on port 4111. |
 | `healing` | The [healer agent](/cloud/day-2/healer-agent) noticed a crash and is patching it. |
-| `broken` | Healer exhausted 3 attempts. Admin action needed — open chat / terminal. |
+| `syncing` | Git proxy received an external push; `sync.sh` is running inside the sandbox (stops server, force-pulls latest code, reinstalls deps, restarts). Clears automatically when the dev server comes back up. See [Project persistence](/cloud/project-persistence). |
+| `broken` | [Healer](/cloud/day-2/healer-agent) exhausted 3 attempts and entered passive mode — it still polls health but won't call the AI agent again. The sandbox may self-recover; if not, open chat / terminal to fix manually. |
 | `paused` | E2B suspended the sandbox for inactivity. Resumes on the next user request. |
 
 ## Refresh

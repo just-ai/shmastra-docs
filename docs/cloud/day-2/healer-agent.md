@@ -19,7 +19,7 @@ The healer activates in two distinct situations:
 1. **After a runtime crash** — when the running dev server crashes or
    becomes unresponsive (described in detail below).
 2. **During sandbox setup or resume** — if the initial provisioning
-   or sandbox wake-up fails (e.g. the dev server won’t start after
+   or sandbox wake-up fails (e.g. the dev server won't start after
    resuming a paused sandbox), the healer is invoked automatically.
    From your perspective in the Manage UI, the sandbox shows
    `healing` status rather than going straight to `broken`.
@@ -27,7 +27,7 @@ The healer activates in two distinct situations:
 In both cases the logic is the same: a Mastra agent reads the logs,
 diagnoses the root cause, applies a minimal fix, and restarts the
 server. If it succeeds, status returns to `ready`; if all three
-attempts fail, status becomes `broken`.
+attempts fail, the healer enters passive mode (see below).
 
 ## How crashes are detected
 
@@ -75,17 +75,38 @@ When any signal confirms a crash:
 5. **Outcome.**
    - **Success** → the agent commits its fix (`git commit`), reports
      `status: "ready"`, and restarts itself to free memory.
-   - **Failure** → after 3 attempts it reports `status: "broken"`
-     with a summary and stops to avoid infinite loops.
+   - **Failure** → after 3 attempts, the healer reports
+     `status: "broken"` and enters **passive mode**: it stops
+     invoking the AI agent but continues polling health every 20 s.
+     If the server recovers on its own (e.g. after a user edits a
+     file or pm2 retries), the healer reports `status: "ready"` and
+     exits passive mode automatically.
+
+## Passive mode
+
+After three failed heal attempts the healer shifts into a monitoring-
+only state rather than terminating:
+
+- Health polls continue on the normal 20-second cycle.
+- Agent invocations are skipped — no further AI tokens are spent.
+- If a health check succeeds, the healer clears the passive flag
+  and reports `status: "ready"` on the Cloud side, transparently
+  recovering the sandbox without any admin action.
+
+Passive mode prevents runaway token spend on a known-broken sandbox
+while still detecting self-recovery (e.g. the user manually fixes the
+broken file, or pm2's own retry eventually brings the server back up).
 
 ## Status transitions
 
 ```
 provisioning/resuming → (setup error) → healing → ready
-                                                  → broken (after 3 failed attempts)
+                                                  → broken + passive mode
 
 running → (crash) → healing → ready
-                             → broken (after 3 failed attempts)
+                             → broken + passive mode
+
+broken + passive mode → (health recovers) → ready
 ```
 
 ## What the healer can touch
@@ -118,7 +139,11 @@ the same `/api/gateway/*` Edge proxy.
 
 ## What to do when a sandbox is `broken`
 
-It means the healer gave up. Open the [Manage UI](/cloud/manage-ui/):
+It means the healer exhausted its AI-assisted attempts and entered
+passive mode. It is still monitoring health — if the issue clears
+itself, the sandbox will recover automatically. If it doesn't:
+
+Open the [Manage UI](/cloud/manage-ui/):
 
 1. **Logs → healer** — see the last few attempts and what they
    tried.

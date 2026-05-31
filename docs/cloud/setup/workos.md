@@ -1,9 +1,13 @@
 # Setup: WorkOS
 
 WorkOS handles sign-in and organisation membership. Shmastra Cloud
-uses the [AuthKit Next.js SDK](https://workos.com/docs/user-management/nextjs)
-— users see a hosted sign-in page, and the middleware in `middleware.ts`
-verifies each request.
+uses the [AuthKit Next.js SDK](https://workos.com/docs/user-management/nextjs).
+Rather than redirecting users to WorkOS's hosted sign-in page,
+Shmastra Cloud presents its own magic-code sign-in form: the user
+enters their email, WorkOS delivers a one-time code, and after
+entering the code they are returned to the page they were originally
+trying to reach. The middleware in `middleware.ts` verifies each
+request.
 
 ## Steps
 
@@ -14,8 +18,10 @@ At <https://dashboard.workos.com> → sign up. Create a new project.
 ### 2. Enable AuthKit
 
 In the dashboard navigate to **AuthKit → Configuration**. Turn on
-AuthKit. Pick the authentication methods your team will use (email +
-password, magic link, Google, Microsoft, SSO — your call).
+AuthKit. Under authentication methods, enable **Magic Auth** (email
+one-time code) — that is the method Shmastra Cloud's sign-in form
+uses. You can enable additional methods (Google, Microsoft, SSO) if
+you want users to have extra sign-in options.
 
 ### 3. Set the redirect URI
 
@@ -31,6 +37,10 @@ https://<your-cloud-domain>/callback
 ```
 http://localhost:3000/callback
 ```
+
+WorkOS calls this URL after the user completes authentication.
+Shmastra's `/callback` route receives the code, exchanges it for a
+session, and redirects the user to their original destination.
 
 ### 4. Create (or pick) an organisation
 

@@ -115,9 +115,8 @@ export default defineConfig({
           items: [
             { text: 'Local development', link: '/cloud/local-development' },
             { text: 'Onboarding your team', link: '/cloud/onboarding-your-team' },
-            { text: 'Sharing apps', link: '/cloud/sharing-apps' },
-            { text: 'Workflow scheduling', link: '/cloud/scheduling' },
             { text: 'App sharing', link: '/cloud/app-sharing' },
+            { text: 'Workflow scheduling', link: '/cloud/scheduling' },
             { text: 'Project persistence', link: '/cloud/project-persistence' },
           ],
         },
