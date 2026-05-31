@@ -85,4 +85,4 @@ permissions, and how to revoke access.
   dev server.
 - **On Shmastra Cloud, share apps with teammates.** Generate a stable
   link from `/apps/<name>` that any WorkOS-authed user in your org
-  can open — see [Sharing apps](/cloud/sharing-apps).
+  can open — see [App sharing](/cloud/app-sharing).
